@@ -1,7 +1,7 @@
-class LogGraph {
+class LogCurve {
   float a, b;
   
-  LogGraph(float a, float b) {
+  LogCurve(float a, float b) {
     this.a = a;
     this.b = b;
   }
@@ -14,7 +14,9 @@ class LogGraph {
 // Source: https://keisan.casio.com/exec/system/14059930226691
 // (x, y) = (study time, mark)
 // Returns the best-fit graph in the form a+b*ln(x)
-LogGraph logRegression(ArrayList<Test> subjectData) {
+LogCurve logRegression(ArrayList<Test> subjectData) {
+  if (subjectData == null)
+    return null;
   int n = subjectData.size();
   
   float lnMean = 0;
@@ -35,5 +37,5 @@ LogGraph logRegression(ArrayList<Test> subjectData) {
   
   float b = Sxy / Sxx;
   float a = yMean - b * lnMean;
-  return new LogGraph(a, b);
+  return new LogCurve(a, b);
 }

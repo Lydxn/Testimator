@@ -19,7 +19,7 @@ final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
 PImage hidden, plus;
-PFont font;
+PFont victorFont, andalemoFont, ubuntuFont, ubuntuBoldFont;
 
 // Mode framework ========================
 enum Mode { MAIN, INPUT, OUTPUT, GRAPH, NEW };
@@ -32,14 +32,19 @@ HashMap<String, ArrayList<Test>> data;
 Button inputB, outputB, graphB, subjectB; //mode - MAIN
 Button saveButton, clearButton, randomButton; //not used at the moment
 
+Graph graph;
+
 void setup() {
-  size(900,600);
+  size(1200, 800);
   textAlign(CORNER, CENTER);
+  
   //load images / font   ==================
-  hidden = loadImage("images/hidden.png");
-  plus = loadImage("images/plus.png");
-  font = createFont("images/font.ttf", 200);
-  textFont(font);
+  hidden = loadImage("data/images/hidden.png");
+  plus = loadImage("data/images/plus.png");
+  victorFont = createFont("data/fonts/font.ttf", 1);
+  andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
+  ubuntuFont = createFont("data/fonts/ubuntu.ttf", 1);
+  ubuntuBoldFont = createFont("data/fonts/ubuntu_bold.ttf", 1);
   
   //=======================================
   loadData();
@@ -58,9 +63,6 @@ void setup() {
   data.put("Math", math);
   data.put("English", eng);
   
-  LogGraph graph = logRegression(data.get("Biology"));
-  println(graph.a, graph.b);
-  
   // *FOR DEBUGGING*
   dumpData();
   
@@ -69,6 +71,8 @@ void setup() {
   
   //initalize buttons for all modes
   initalizeButtons();
+  
+  graph = new Graph(bio, 200, 150, 300);
 }
 
 void draw() {
@@ -81,6 +85,10 @@ void draw() {
   case GRAPH: graphMode(); break;
   case NEW: newMode(); break; //this is the draw function of Mode.NEW, don't think otherwise
   }
+  
+  graph.render();
+  
+  graph.sz = 400 + sin(frameCount / 20.0) * 30;
 }
 
 void mouseClicked() {
