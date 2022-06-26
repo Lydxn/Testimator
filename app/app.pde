@@ -53,7 +53,7 @@ void setup() {
   ArrayList<Test> bio = new ArrayList<Test>();
   bio.add(new Test(80, 90));
   bio.add(new Test(65, 80));
-  bio.add(new Test(75, 76));
+  bio.add(new Test(50, 65));
   ArrayList<Test> math = new ArrayList<Test>();
   math.add(new Test(90, 100));
   math.add(new Test(70, 80));
