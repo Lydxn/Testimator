@@ -26,7 +26,8 @@ class Button {
     textFont(victorFont, this.txtSz);
     text(name, this.x+this.w/this.txtSz, this.y, this.w, this.h);
     
-    if (this == subjectB) image(icon, this.x+this.w*0.8,this.y+this.h*1/6, this.h*2/3,this.h*2/3);
+    image(icon, this.x+this.w*0.8,this.y+this.h*1/6, this.h*2/3,this.h*2/3);
+    if (this == inputB) image(icon, this.x+this.w*0.8,this.y+this.h*1/6, this.h*3/5,this.h*2/3);
   }
   
   boolean isHover() {

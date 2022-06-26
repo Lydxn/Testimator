@@ -5,14 +5,9 @@ void mainMode() {
   clearButton.render();
   randomButton.render();
   */
-  toolBar();
 }
 
 void mainClick() {
-  if (inputB.isHover()) mode = Mode.INPUT;
-  else if (outputB.isHover()) mode = Mode.OUTPUT;
-  else if (graphB.isHover()) mode = Mode.GRAPH;
-  else if (subjectB.isHover()) mode = Mode.NEW;
   
   /*
   if (saveButton.isHover()) saveData();
