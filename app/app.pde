@@ -19,7 +19,7 @@ final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
 PShape target, plus, pencil, graphI;
-PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont;
+PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont, ubuntuMonoFont;
 
 // Mode framework ========================
 enum Mode { MAIN, INPUT, OUTPUT, GRAPH, NEW };
@@ -33,7 +33,15 @@ int subjectIdx;
 Button inputB, outputB, graphB, subjectB; //mode - MAIN
 Button saveButton, clearButton, randomButton; //not used at the moment
 
+// keypress variables
+int curKey = -1, curKeyCode = -1; // -1 = no key pressed
+boolean isKeyHeld = false;
+
+// textboxes
+TextBox tb;
+
 void setup() {
+  frameRate(60);
   size(1200, 800);
   textAlign(CORNER, CENTER);
   
@@ -47,6 +55,8 @@ void setup() {
   andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
   ubuntuFont = createFont("data/fonts/ubuntu.ttf", 1);
   ubuntuBoldFont = createFont("data/fonts/ubuntu_bold.ttf", 1);
+  ubuntuMonoFont = createFont("data/fonts/ubuntu_monobold.ttf", 30);
+  tb = new TextBox(100, 100, 500, 60, ubuntuMonoFont);
 
   //=======================================
   loadData();
@@ -61,6 +71,8 @@ void setup() {
   math.add(new Test(70, 80));
   ArrayList<Test> eng = new ArrayList<Test>();
   eng.add(new Test(50, 1));
+  eng.add(new Test(50, 2));
+  eng.add(new Test(60, 3));
   data.put("Biology", bio);
   data.put("Math", math);
   data.put("English", eng);
@@ -90,6 +102,9 @@ void draw() {
   }
  
   toolBar();
+  
+  // *FOR TESTING*
+  tb.render();
 }
 
 void mouseClicked() {
