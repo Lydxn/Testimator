@@ -4,7 +4,7 @@ class TextBox {
   String text = "";
   PFont font;
   int textSize, textLength;
-  boolean isDown;
+  boolean isSelected;
 
   TextBox(float x, float y, float wdt, float hgt, PFont font) {
     this.x = x;
@@ -12,13 +12,13 @@ class TextBox {
     this.wdt = wdt;
     this.hgt = hgt;
     this.font = font;
-    
+
     normalFill = 255;
     normalStroke = 0;
     hoverFill = 0;
     hoverStroke = 255;
     textSize = 30;
-    isDown = false;
+    isSelected = false;
   }
 
   void render() {
@@ -36,7 +36,7 @@ class TextBox {
       fill(hoverStroke);
       //textFont(font);
       textSize(textSize);
-      text(getTextInsert(), x+textWidth("a")/2+10, y + hgt/2 + textSize/2);
+      text(text+(frameCount / 25 % 2 == 0 && isSelected ? "_" : ""), x+textWidth("a")/2+10, y + hgt/2 + textSize/2);
     } else {
       //box
       fill(normalFill);
@@ -47,7 +47,14 @@ class TextBox {
       fill(normalStroke);
       //textFont(font);
       textSize(textSize);
-      text(getTextInsert(), x+textWidth("a")/2+10, y + hgt/2 + textSize/2);
+      text(text+(frameCount / 25 % 2 == 0 && isSelected ? "_" : ""), x+textWidth("a")/2+10, y + hgt/2 + textSize/2);
+    }
+    
+    //check if text box is selected
+    if (mousePressed && isHovering()) {
+      isSelected = true;
+    } else if (mousePressed) {
+      isSelected = false;
     }
   }
 
@@ -56,27 +63,29 @@ class TextBox {
   }
 
   void act() {
-    if (curKeyCode == BACKSPACE && curKeyCode != -1) // deleting text
+    if (curKeyCode == BACKSPACE && curKeyCode != -1) {// deleting text
       backspace();
-    else if (curKey != -1 && curKey != 65535 && !isKeyHeld) // entering text
+    } else if (curKey != -1 && curKey != 65535 && !isKeyHeld) {// entering text
       addText(char(curKey));
+    }
   }
 
   void addText(char ch) {
-    if (textWidth(getTextInsert() + ch) + textSize < wdt) { //check if within textbox
+    if (textWidth(getTextInsert() + ch) + textSize < wdt && isSelected) { //check if within textbox
       text += ch;
       textLength++;
     }
   }
 
   void backspace() {
-    if (!text.isEmpty()) //check if text is not empty
+    if (!text.isEmpty() && isSelected) //check if text is not empty
       text = text.substring(0, text.length() - 1);
   }
-  
+
   // Add extra visual effect inspired by "Insert Mode"
   String getTextInsert() {
-    return text + (frameCount / 25 % 2 == 0 ? "_" : "");
+    if (isSelected) return text + (frameCount / 25 % 2 == 0 ? "_" : "");
+    else return text;
   }
 }
 
@@ -84,7 +93,10 @@ void keyPressed() {
   if (curKeyCode != -1) isKeyHeld = curKeyCode == keyCode;
   curKey = key;
   curKeyCode = keyCode;
-  tb.act();
+  if (mode == Mode.INPUT) { 
+    inputStudyTime.act();
+    inputMark.act();
+  }
 }
 
 void keyReleased() {

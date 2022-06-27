@@ -38,7 +38,7 @@ int curKey = -1, curKeyCode = -1; // -1 = no key pressed
 boolean isKeyHeld = false;
 
 // textboxes
-TextBox tb;
+TextBox inputStudyTime, inputMark;
 
 void setup() {
   frameRate(60);
@@ -56,7 +56,10 @@ void setup() {
   ubuntuFont = createFont("data/fonts/ubuntu.ttf", 1);
   ubuntuBoldFont = createFont("data/fonts/ubuntu_bold.ttf", 1);
   ubuntuMonoFont = createFont("data/fonts/ubuntu_monobold.ttf", 30);
-  tb = new TextBox(100, 100, 500, 60, ubuntuMonoFont);
+  
+  
+  inputStudyTime = new TextBox(100, 350, 500, 50, ubuntuMonoFont);
+  inputMark = new TextBox(100, 500, 500, 50, ubuntuMonoFont);
 
   //=======================================
   loadData();
@@ -102,8 +105,6 @@ void draw() {
  
   toolBar();
   
-  // *FOR TESTING*
-  tb.render();
 }
 
 void mouseClicked() {
@@ -125,7 +126,7 @@ void toolBar() {
     noStroke();
     rect(width-toolbarW, 0, toolbarW, height);
     
-    //renter the buttons
+    //render the buttons
     inputB.render();
     outputB.render();
     homeB.render();
@@ -143,9 +144,10 @@ void initalizeButtons() {
   //used for initalizing the buttons, the rendering occurs in their respective modes
   //mode - MAIN
   
+  
+  saveButton = new Button("Save", 100, 600, 200, 50, white, black, 30, plus); 
+  clearButton = new Button("Clear", 350, 600, 200, 50, white, black, 30, home);
   /*
-  saveButton = new Button("Save", 200, 200, 100,50);
-  clearButton = new Button("Clear", 350, 200, 100,50);
   randomButton = new Button("Random", 500, 200, 100,50);
   */
   inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,20,pencil);
