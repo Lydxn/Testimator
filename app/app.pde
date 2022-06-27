@@ -18,7 +18,7 @@ final color lightGray  = #BDCBCE;
 final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
-PImage hidden, plus;
+PImage hidden, plus, target, pencil, graphI;
 PFont victorFont, andalemoFont, ubuntuFont, ubuntuBoldFont;
 
 // Mode framework ========================
@@ -32,7 +32,7 @@ HashMap<String, ArrayList<Test>> data;
 Button inputB, outputB, graphB, subjectB; //mode - MAIN
 Button saveButton, clearButton, randomButton; //not used at the moment
 
-Graph graph;
+Graph graph; //graph class
 
 void setup() {
   size(1200, 800);
@@ -41,6 +41,10 @@ void setup() {
   //load images / font   ==================
   hidden = loadImage("data/images/hidden.png");
   plus = loadImage("data/images/plus.png");
+  target = loadImage("data/images/target.png");
+  pencil = loadImage("data/images/input.png");
+  graphI = loadImage("data/images/graph.png");
+  
   victorFont = createFont("data/fonts/font.ttf", 1);
   andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
   ubuntuFont = createFont("data/fonts/ubuntu.ttf", 1);
@@ -73,11 +77,10 @@ void setup() {
   initalizeButtons();
   
   graph = new Graph(bio, 200, 150, 300);
-    graph.render();
 }
 
 void draw() {
-  //background(255);
+  background(255);
   
   switch (mode) {
   case MAIN: mainMode(); break;
@@ -86,9 +89,16 @@ void draw() {
   case GRAPH: graphMode(); break;
   case NEW: newMode(); break; //this is the draw function of Mode.NEW, don't think otherwise
   }
+  
+  graph.render();
+  toolBar();
+  
+  graph.sz = 400 + sin(frameCount / 20.0) * 30;
 }
 
 void mouseClicked() {
+  toolBarClick();
+  
   if (mode == Mode.MAIN) mainClick(); 
   else if (mode == Mode.INPUT) inputClick(); 
   else if (mode == Mode.OUTPUT) outputClick(); 
@@ -99,18 +109,7 @@ void mouseClicked() {
 //========================================================================
 
 void toolBar() {
-  
-  if (mode == Mode.OUTPUT || mode == Mode.INPUT || mode == Mode.GRAPH || mode == Mode.NEW) {
-    fill(lightCyan);
-    noStroke();
-    rect(width-20, 0, 20, height);
-        
-    fill(cyan);
-    rect(width-20,height/2-10,20,20,5);
-    image(hidden, width-20, height/2-10, 20, 20);
-  }
-  else { //Mode.MAIN
-    //render the tool bar ============
+  //render the tool bar ============
     fill(lightCyan);
     noStroke();
     rect(width-200, 0, 200, height);
@@ -120,7 +119,13 @@ void toolBar() {
     outputB.render();
     graphB.render();
     subjectB.render();
-  }
+}
+
+void toolBarClick() {
+  if (inputB.isHover()) mode = Mode.INPUT;
+  else if (outputB.isHover()) mode = Mode.OUTPUT;
+  else if (graphB.isHover()) mode = Mode.GRAPH;
+  else if (subjectB.isHover()) mode = Mode.NEW;    
 }
 
 void initalizeButtons() {
@@ -132,9 +137,9 @@ void initalizeButtons() {
   clearButton = new Button("Clear", 350, 200, 100,50);
   randomButton = new Button("Random", 500, 200, 100,50);
   */
-  inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,18,plus);
-  outputB = new Button("Set a Target", width-210,90,200,50,lightGray,white,18, plus);
-  graphB = new Button("To see graphs", width-210,150,200,50,lightGray,white,18, plus);
+  inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,18,pencil);
+  outputB = new Button("Set a Target", width-210,90,200,50,lightGray,white,18, target);
+  graphB = new Button("To see graphs", width-210,150,200,50,lightGray,white,18, graphI);
   subjectB = new Button("New Subject", width-120, height-50, 115, 30, lightCyan, blue, 14, plus);
   
   //mode - INPUT
