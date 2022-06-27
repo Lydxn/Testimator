@@ -65,7 +65,7 @@ class TextBox {
   void act() {
     if (curKeyCode == BACKSPACE && curKeyCode != -1) {// deleting text
       backspace();
-    } else if (curKey != -1 && curKey != 65535 && !isKeyHeld) {// entering text
+    } else if (curKey != -1 && curKey != 65535 && !isKeyHeld && keyCode != ENTER) {// entering text
       addText(char(curKey));
     }
   }
@@ -96,6 +96,9 @@ void keyPressed() {
   if (mode == Mode.INPUT) { 
     inputStudyTime.act();
     inputMark.act();
+  }
+  if (mode == Mode.OUTPUT) {
+    inputTarget.act();
   }
 }
 

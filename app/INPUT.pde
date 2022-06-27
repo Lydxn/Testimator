@@ -9,7 +9,7 @@ void inputMode() {
    
    //instructions for textboxes
    textSize(40);
-   text("Study Time", xAlign, 300);
+   text("Study Time (min)", xAlign, 300);
    text("Mark%", xAlign, 450);
    
    //textboxes

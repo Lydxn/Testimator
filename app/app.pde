@@ -38,7 +38,7 @@ int curKey = -1, curKeyCode = -1; // -1 = no key pressed
 boolean isKeyHeld = false;
 
 // textboxes
-TextBox inputStudyTime, inputMark;
+TextBox inputStudyTime, inputMark, inputTarget;
 
 void setup() {
   frameRate(60);
@@ -57,9 +57,10 @@ void setup() {
   ubuntuBoldFont = createFont("data/fonts/ubuntu_bold.ttf", 1);
   ubuntuMonoFont = createFont("data/fonts/ubuntu_monobold.ttf", 30);
   
-  
+  //intialize the textboxes
   inputStudyTime = new TextBox(100, 350, 500, 50, ubuntuMonoFont);
   inputMark = new TextBox(100, 500, 500, 50, ubuntuMonoFont);
+  inputTarget = new TextBox(100,350,500,50,ubuntuMonoFont);
 
   //=======================================
   loadData();
