@@ -18,7 +18,7 @@ final color lightGray  = #BDCBCE;
 final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
-PShape target, plus, pencil, home;
+PShape target, plus, pencil, home, eraser;
 PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont, ubuntuMonoFont;
 
 // Mode framework ========================
@@ -50,6 +50,7 @@ void setup() {
   target = loadShape("data/images/target.svg");
   pencil = loadShape("data/images/pencil.svg");
   home = loadShape("data/images/home.svg");
+  eraser = loadShape("data/images/eraser.svg"); //https://www.onlinewebfonts.com/icon/468470
   
   rubikFont = createFont("data/fonts/rubik.ttf", 1);
   andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
@@ -147,7 +148,7 @@ void initalizeButtons() {
   
   
   saveButton = new Button("Save", 100, 600, 200, 50, white, black, 30, plus); 
-  clearButton = new Button("Clear", 350, 600, 200, 50, white, black, 30, home);
+  clearButton = new Button("Clear", 350, 600, 200, 50, white, black, 30, eraser);
   /*
   randomButton = new Button("Random", 500, 200, 100,50);
   */

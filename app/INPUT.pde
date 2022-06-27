@@ -23,5 +23,8 @@ void inputMode() {
 }
 
 void inputClick() {
-  
+  if (clearButton.isHover()) {
+    inputStudyTime.text = "";
+    inputMark.text = "";
+  }
 }

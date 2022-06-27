@@ -21,7 +21,7 @@ void outputMode() {
    fill(255);
    rect(xAlign, 500, 500, 50,20);
    fill(0);
-   if (int(inputTarget.text) == 0 && inputTarget.text.length() > 0) text("dumbo, NUMBERS",xAlign+textWidth("a")/2+10,500 + 50/2 + 30/2); //if the bad boy dont type numbers
+   if (int(inputTarget.text) == 0 && inputTarget.text.length() > 0) text("dumbo " + inputTarget.text + ", NUMBERS",xAlign+textWidth("a")/2+10,500 + 50/2 + 30/2); //if the bad boy dont type numbers
    else text(str(int(inputTarget.text)*2+5),xAlign+textWidth("a")/2+10,500 + 50/2 + 30/2);
 }
 
