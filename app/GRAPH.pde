@@ -1,12 +1,3 @@
-// See each subjects' graphs (the study/grade trend)
-void graphMode() {
-  
-}
-
-void graphClick() {
-}
-
-//end of Mode.GRAPH
 //Graph class ==================================================================
 
 class Graph {

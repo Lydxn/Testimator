@@ -18,11 +18,11 @@ final color lightGray  = #BDCBCE;
 final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
-PShape target, plus, pencil, graphI;
+PShape target, plus, pencil, home;
 PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont, ubuntuMonoFont;
 
 // Mode framework ========================
-enum Mode { MAIN, INPUT, OUTPUT, GRAPH, NEW };
+enum Mode { MAIN, INPUT, OUTPUT, NEW };
 Mode mode;
 
 // Maps chosen subject to test data
@@ -30,7 +30,7 @@ Map<String, ArrayList<Test>> data;
 int subjectIdx;
 
 //all the buttons :(
-Button inputB, outputB, graphB, subjectB; //mode - MAIN
+Button inputB, outputB, homeB, subjectB; //toolBar
 Button saveButton, clearButton, randomButton; //not used at the moment
 
 // keypress variables
@@ -49,7 +49,7 @@ void setup() {
   plus = loadShape("data/images/plus.svg");
   target = loadShape("data/images/target.svg");
   pencil = loadShape("data/images/pencil.svg");
-  graphI = loadShape("data/images/graph.svg");
+  home = loadShape("data/images/home.svg");
   
   rubikFont = createFont("data/fonts/rubik.ttf", 1);
   andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
@@ -97,7 +97,6 @@ void draw() {
   case MAIN: mainMode(); break;
   case INPUT: inputMode(); break;
   case OUTPUT: outputMode(); break;
-  case GRAPH: graphMode(); break;
   case NEW: newMode(); break; //this is the draw function of Mode.NEW, don't think otherwise
   }
  
@@ -113,7 +112,6 @@ void mouseClicked() {
   if (mode == Mode.MAIN) mainClick(); 
   else if (mode == Mode.INPUT) inputClick(); 
   else if (mode == Mode.OUTPUT) outputClick(); 
-  else if (mode == Mode.GRAPH) graphClick(); 
   else if (mode == Mode.NEW) newClick(); 
 }
 
@@ -130,14 +128,14 @@ void toolBar() {
     //renter the buttons
     inputB.render();
     outputB.render();
-    graphB.render();
+    homeB.render();
     subjectB.render();
 }
 
 void toolBarClick() {
   if (inputB.isHover()) mode = Mode.INPUT;
   else if (outputB.isHover()) mode = Mode.OUTPUT;
-  else if (graphB.isHover()) mode = Mode.GRAPH;
+  else if (homeB.isHover()) mode = Mode.MAIN;
   else if (subjectB.isHover()) mode = Mode.NEW;    
 }
 
@@ -152,7 +150,7 @@ void initalizeButtons() {
   */
   inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,20,pencil);
   outputB = new Button("Set a Target", width-210,90,200,50,lightGray,white,20, target);
-  graphB = new Button("To see graphs", width-210,150,200,50,lightGray,white,20, graphI);
+  homeB = new Button("Homepage", width-210,150,200,50,lightGray,white,20, home);
   subjectB = new Button("New Subject", width-120, height-50, 115, 30, lightCyan, blue, 14, plus);
   
   //mode - INPUT
