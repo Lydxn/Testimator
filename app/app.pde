@@ -18,8 +18,8 @@ final color lightGray  = #BDCBCE;
 final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
-PImage hidden, plus, target, pencil, graphI;
-PFont victorFont, andalemoFont, ubuntuFont, ubuntuBoldFont;
+PShape target, plus, pencil, graphI;
+PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont;
 
 // Mode framework ========================
 enum Mode { MAIN, INPUT, OUTPUT, GRAPH, NEW };
@@ -39,17 +39,16 @@ void setup() {
   textAlign(CORNER, CENTER);
   
   //load images / font   ==================
-  hidden = loadImage("data/images/hidden.png");
-  plus = loadImage("data/images/plus.png");
-  target = loadImage("data/images/target.png");
-  pencil = loadImage("data/images/input.png");
-  graphI = loadImage("data/images/graph.png");
+  plus = loadShape("data/images/plus.svg");
+  target = loadShape("data/images/target.svg");
+  pencil = loadShape("data/images/pencil.svg");
+  graphI = loadShape("data/images/graph.svg");
   
-  victorFont = createFont("data/fonts/font.ttf", 1);
+  rubikFont = createFont("data/fonts/rubik.ttf", 1);
   andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
   ubuntuFont = createFont("data/fonts/ubuntu.ttf", 1);
   ubuntuBoldFont = createFont("data/fonts/ubuntu_bold.ttf", 1);
-  
+
   //=======================================
   loadData();
   

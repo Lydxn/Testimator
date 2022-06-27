@@ -37,7 +37,6 @@ void saveData() {
     }
     saveStrings(dataPath(subject + ".txt"), output);
   }
-
   dumpData();
 }
 

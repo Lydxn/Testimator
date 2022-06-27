@@ -1,5 +1,5 @@
 void mainMode() {
- 
+  
   /*
   saveButton.render();
   clearButton.render();
