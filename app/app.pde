@@ -26,13 +26,12 @@ enum Mode { MAIN, INPUT, OUTPUT, GRAPH, NEW };
 Mode mode;
 
 // Maps chosen subject to test data
-HashMap<String, ArrayList<Test>> data;
+Map<String, ArrayList<Test>> data;
+int subjectIdx;
 
 //all the buttons :(
 Button inputB, outputB, graphB, subjectB; //mode - MAIN
 Button saveButton, clearButton, randomButton; //not used at the moment
-
-Graph graph; //graph class
 
 void setup() {
   size(1200, 800);
@@ -75,7 +74,8 @@ void setup() {
   //initalize buttons for all modes
   initalizeButtons();
   
-  graph = new Graph(bio, 200, 150, 300);
+  // set subject to first one in map
+  subjectIdx = 0;
 }
 
 void draw() {
@@ -88,11 +88,8 @@ void draw() {
   case GRAPH: graphMode(); break;
   case NEW: newMode(); break; //this is the draw function of Mode.NEW, don't think otherwise
   }
-  
-  graph.render();
+ 
   toolBar();
-  
-  graph.sz = 400 + sin(frameCount / 20.0) * 30;
 }
 
 void mouseClicked() {
@@ -107,11 +104,13 @@ void mouseClicked() {
 
 //========================================================================
 
+final int toolbarW = 200;
+
 void toolBar() {
   //render the tool bar ============
     fill(lightCyan);
     noStroke();
-    rect(width-200, 0, 200, height);
+    rect(width-toolbarW, 0, toolbarW, height);
     
     //renter the buttons
     inputB.render();
@@ -136,9 +135,9 @@ void initalizeButtons() {
   clearButton = new Button("Clear", 350, 200, 100,50);
   randomButton = new Button("Random", 500, 200, 100,50);
   */
-  inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,18,pencil);
-  outputB = new Button("Set a Target", width-210,90,200,50,lightGray,white,18, target);
-  graphB = new Button("To see graphs", width-210,150,200,50,lightGray,white,18, graphI);
+  inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,20,pencil);
+  outputB = new Button("Set a Target", width-210,90,200,50,lightGray,white,20, target);
+  graphB = new Button("To see graphs", width-210,150,200,50,lightGray,white,20, graphI);
   subjectB = new Button("New Subject", width-120, height-50, 115, 30, lightCyan, blue, 14, plus);
   
   //mode - INPUT

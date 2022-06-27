@@ -18,7 +18,7 @@ LogCurve logRegression(ArrayList<Test> subjectData) {
   if (subjectData == null)
     return null;
   // add 1 to "fix" the graph such that root isn't positive
-  int n = subjectData.size() + 1;
+  int n = subjectData.size();
 
   float lnMean = 0;
   for (Test test : subjectData) lnMean += log(test.studyTime);
@@ -38,5 +38,6 @@ LogCurve logRegression(ArrayList<Test> subjectData) {
   
   float b = Sxy / Sxx;
   float a = yMean - b * lnMean;
+
   return new LogCurve(a, b);
 }
