@@ -124,7 +124,7 @@ final int toolbarW = 200;
 
 void toolBar() {
   //render the tool bar ============
-    fill(lightCyan);
+    fill(blue);
     noStroke();
     rect(width-toolbarW, 0, toolbarW, height);
     
@@ -155,7 +155,7 @@ void initalizeButtons() {
   inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,20,pencil);
   outputB = new Button("Set a Target", width-210,90,200,50,lightGray,white,20, target);
   homeB = new Button("Homepage", width-210,150,200,50,lightGray,white,20, home);
-  subjectB = new Button("New Subject", width-120, height-50, 115, 30, lightCyan, blue, 14, plus);
+  subjectB = new Button("New Subject", width-210, height-100, 200, 50, lightCyan, blue, 20, plus);
   
   //mode - INPUT
   
