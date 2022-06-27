@@ -3,7 +3,7 @@ class Test {
   int studyTime;
   
   Test(float mark, int studyTime) {
-        this.mark = mark;
+    this.mark = mark;
     this.studyTime = studyTime;
   }
 }

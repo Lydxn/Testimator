@@ -1,14 +1,3 @@
-// See each subjects' graphs (the study/grade trend)
-void graphMode() {
-  
-}
-
-void graphClick() {
-}
-
-//end of Mode.GRAPH
-//Graph class ==================================================================
-
 class Graph {
   ArrayList<Test> subjectData;
   float xStart, yStart, sz;
@@ -36,6 +25,7 @@ class Graph {
         }
       }
     }
+    int xSz = unitSz * 10;
     
     // trace lines and number labels
     stroke(gray, 50);
@@ -106,9 +96,9 @@ class Graph {
     beginShape();
     int samples = 1000; // should be fast enough...
     for (int i = 0; i < samples; i++) {
-      float x = 1.1 * maxX * i / samples, y = curve.eval(x);
+      float x = 1.0 * xSz * i / samples, y = curve.eval(x);
       if (0 <= y && y <= 100) {
-        float realX = this.xStart + x / maxX * this.sz;
+        float realX = this.xStart + x * this.sz / xSz;
         float realY = this.yStart + this.sz - y / 100.0 * this.sz;
         vertex(realX, realY);
       }
@@ -119,9 +109,19 @@ class Graph {
     stroke(red);
     strokeWeight(this.sz * 0.01);
     for (Test test : subjectData) {
-      float realX = this.xStart + test.studyTime / maxX * this.sz;
-      float realY = this.yStart + this.sz - test.mark / 100.0 * this.sz;
+      float realX = this.xStart + this.sz * test.studyTime / xSz;
+      float realY = this.yStart + this.sz - this.sz * test.mark / 100.0;
       point(realX, realY);
     }
   }
+}
+
+// See each subjects' graphs (the study/grade trend)
+void graphMode() {
+  toolBar();
+  
+}
+
+void graphClick() {
+  if (mouseX >= width-20) mode = Mode.MAIN; //returns to the main mode  
 }

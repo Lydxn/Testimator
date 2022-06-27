@@ -1,9 +1,8 @@
 class Button {
   String name;
   float x, y, w, h, txtSz;
-  color col, col2; 
+  color col, col2; //col is always button base color, col2 is text color
   PImage icon;
-  //col is always button base color, col2 is text color
   boolean isClicked;
   
   Button(String name, float x, float y, float w, float h, color col, color col2, float txtSz, PImage icon) {
@@ -26,8 +25,7 @@ class Button {
     textFont(victorFont, this.txtSz);
     text(name, this.x+this.w/this.txtSz, this.y, this.w, this.h);
     
-    image(icon, this.x+this.w*0.8,this.y+this.h*1/6, this.h*2/3,this.h*2/3);
-    if (this == inputB) image(icon, this.x+this.w*0.8,this.y+this.h*1/6, this.h*3/5,this.h*2/3);
+    if (this == subjectB) image(icon, this.x+this.w*0.8,this.y+this.h*1/6, this.h*2/3,this.h*2/3);
   }
   
   boolean isHover() {
