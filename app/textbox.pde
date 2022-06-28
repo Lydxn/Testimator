@@ -4,14 +4,15 @@ class TextBox {
   String text = "";
   PFont font;
   int textSize, textLength;
-  boolean isSelected;
+  boolean isSelected, isNumeric;
 
-  TextBox(float x, float y, float wdt, float hgt, PFont font) {
+  TextBox(float x, float y, float wdt, float hgt, PFont font, boolean isNumeric) {
     this.x = x;
     this.y = y;
     this.wdt = wdt;
     this.hgt = hgt;
     this.font = font;
+    this.isNumeric = isNumeric;
 
     normalFill = 255;
     normalStroke = 0;
@@ -49,7 +50,7 @@ class TextBox {
       textSize(textSize);
       text(text+(frameCount / 25 % 2 == 0 && isSelected ? "_" : ""), x+textWidth("a")/2+10, y + hgt/2 + textSize/2);
     }
-
+    
     //check if text box is selected
     if (mousePressed && isHovering()) {
       isSelected = true;
@@ -63,10 +64,11 @@ class TextBox {
   }
 
   void act() {
-    if (curKeyCode == BACKSPACE && curKeyCode != -1) {// deleting text
+    if (curKeyCode == BACKSPACE && curKeyCode != -1) { // deleting text
       backspace();
-    } else if (curKey != -1 && curKey != 65535 && !isKeyHeld && keyCode != ENTER) {// entering text
-      addText(char(curKey));
+    } else if (curKey != -1 && curKey != 65535 && !isKeyHeld && curKeyCode != ENTER) { // entering text
+      if (!isNumeric || (isNumeric && '0' <= curKeyCode && curKeyCode <= '9'))
+        addText(char(curKey));
     }
   }
 
@@ -78,9 +80,10 @@ class TextBox {
   }
 
   void backspace() {
-    if (!text.isEmpty() && isSelected) //check if text is not empty
+    if (!text.isEmpty() && isSelected) { //check if text is not empty
       text = text.substring(0, text.length() - 1);
       textLength--;
+    }
   }
 
   // Add extra visual effect inspired by "Insert Mode"

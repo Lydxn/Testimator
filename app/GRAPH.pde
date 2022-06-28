@@ -16,17 +16,17 @@ class Graph {
     float maxX = 0;
     for (Test test : this.subjectData)
       maxX = max(maxX, test.studyTime);
-    int unitSz = -1; float bestDiff = Float.MAX_VALUE;
-    for (int log = 1; log < 1e9; log *= 10) {
+    int unitSz = -1;
+    outer: for (int log = 1; log < 1e9; log *= 10) {
       for (int x : new int[] {1, 2, 5}) {
         int val = log * x;
-        float diff = abs(maxX / 10 - val);
-        if (diff < bestDiff) {
-          bestDiff = diff;
+        if (val * 10 > maxX) {
           unitSz = val;
+          break outer;
         }
       }
     }
+
     int xSz = unitSz * 10;
     
     // trace lines and number labels

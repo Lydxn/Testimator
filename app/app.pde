@@ -18,7 +18,7 @@ final color lightGray  = #BDCBCE;
 final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
-PShape target, plus, pencil, home, eraser, floppy, trashcan;
+PShape target, plus, pencil, home, eraser, floppy, trashcan, trashcanRed;
 PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont, ubuntuMonoFont;
 
 // Mode framework ========================
@@ -39,6 +39,22 @@ boolean isKeyHeld = false;
 // textboxes
 TextBox inputStudyTime, inputMark, inputTarget, inputSubject;
 
+final int MAX_SUBJECTS = 9;
+
+// list of available colours to choose from
+// *ONLY IMPLEMENT IF TIME IS AVAILABLE*
+color[] AVAILABLE_COLOURS = new color[] {
+  #ff0000,
+  #ff9d00,
+  #f6ff00,
+  #00ffa2,
+  #00ff3c,
+  #00ffe1,
+  #0080ff,
+  #aa00ff,
+  #ff00a2
+};
+
 void setup() {
   frameRate(60);
   size(1200, 800);
@@ -53,6 +69,7 @@ void setup() {
   eraser = loadShape("data/images/eraser.svg"); //https://www.onlinewebfonts.com/icon/468470
   floppy = loadShape("data/images/floppy.svg");
   trashcan = loadShape("data/images/trashcan.svg");
+  trashcanRed = loadShape("data/images/trashcan_red.svg");
   
   rubikFont = createFont("data/fonts/rubik.ttf", 1);
   andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
@@ -61,16 +78,16 @@ void setup() {
   ubuntuMonoFont = createFont("data/fonts/ubuntu_monobold.ttf", 30);
   
   //intialize the textboxes
-  inputStudyTime = new TextBox(100, 350, 500, 50, ubuntuMonoFont);
-  inputMark = new TextBox(100, 500, 500, 50, ubuntuMonoFont);
-  inputTarget = new TextBox(100,350,500,50,ubuntuMonoFont);
-  inputSubject = new TextBox(100, 350, 500, 50, ubuntuMonoFont);
+  inputStudyTime = new TextBox(100, 350, 500, 50, ubuntuMonoFont, true);
+  inputMark = new TextBox(100, 500, 500, 50, ubuntuMonoFont, true);
+  inputTarget = new TextBox(100,350,500,50,ubuntuMonoFont, true);
+  inputSubject = new TextBox(100, 350, 500, 50, ubuntuMonoFont, false);
 
   //=======================================
   loadData();
   
   // add arbitrary values (for testing purposes)
-  Subject bio = new Subject("Biology", new Button("Biology", width-210, -1, 200, 40, -1, white, 20, null));
+  /*Subject bio = new Subject("Biology", new Button("Biology", width-210, -1, 200, 40, -1, white, 20, null));
   bio.addTest(new Test(80, 90));
   bio.addTest(new Test(65, 80));
   bio.addTest(new Test(50, 65));
@@ -85,9 +102,7 @@ void setup() {
   subjects.add(bio);
   subjects.add(math);
   subjects.add(eng);
-  
-  // *FOR DEBUGGING*
-  dumpData();
+  */
   
   // start on the main screen
   mode = Mode.MAIN;
@@ -97,6 +112,7 @@ void setup() {
   
   // set subject to first one in map
   subjectIdx = 0;
+  
 }
 
 void draw() {
@@ -108,15 +124,14 @@ void draw() {
   case OUTPUT: outputMode(); break;
   case NEW: newMode(); break; //this is the draw function of Mode.NEW, don't think otherwise
   }
- 
+
   toolBar();
-  
+
 }
 
 void mouseClicked() {
-  toolBarClick();
-  
-  if (mode == Mode.MAIN) mainClick(); 
+  toolbarClick();
+  if (mode == Mode.MAIN) mainClick();
   else if (mode == Mode.INPUT) inputClick(); 
   else if (mode == Mode.OUTPUT) outputClick(); 
   else if (mode == Mode.NEW) newClick(); 
@@ -139,20 +154,32 @@ void toolBar() {
     subjectB.render();
     
     // render the subject buttons
-    float buttonPos = 180;
+    float buttonPos = 230;
     for (Subject subject : subjects) {
       // set new button y-position since it can change
       subject.button.y = buttonPos;
       buttonPos += 50;
-      subject.button.render();
+      subject.render();
     }
 }
 
-void toolBarClick() {
-  if (inputB.isHover()) mode = Mode.INPUT;
-  else if (outputB.isHover()) mode = Mode.OUTPUT;
+void toolbarClick() {
+  if (inputB.isHover() && inputB.isActive()) mode = Mode.INPUT;
+  else if (outputB.isHover() && outputB.isActive()) mode = Mode.OUTPUT;
   else if (homeB.isHover()) mode = Mode.MAIN;
   else if (subjectB.isHover()) mode = Mode.NEW; 
+  
+  int deleteIdx = -1;
+  for (int i = 0; i < subjects.size(); i++) {
+    Button b = subjects.get(i).button;
+    float trashX = b.x-b.w*0.2, trashY = b.y+b.h*1/6, trashSz = b.h*2/3;
+    if (trashX <= mouseX && mouseX < trashX + trashSz && trashY <= mouseY && mouseY < trashY + trashSz)
+      deleteIdx = i;
+  }
+  if (deleteIdx != -1) {
+    subjects.remove(deleteIdx);
+    saveData();
+  }
   
   for (int i = 0; i < subjects.size(); i++) {
     Subject subject = subjects.get(i);
@@ -166,13 +193,13 @@ void initalizeButtons() {
   //mode - MAIN
   
   
-  saveButton = new Button("Save", 100, 600, 200, 50, white, black, 30, floppy); 
-  clearButton = new Button("Clear", 350, 600, 200, 50, white, black, 30, eraser);
-  addSubjectButton = new Button("Add", 100, 450, 200, 50, white, black, 30, plus);
-  inputB = new Button("New Test", width-210,30,200,50,lightGray,black,20,pencil);
-  outputB = new Button("Set Target", width-210,90,200,50,lightGray,black,20, target);
-  homeB = new Button("Homepage", width-210,150,200,50,lightGray,black,20, home);
-  subjectB = new Button("New Subject", width-210, height-100, 200, 50, lightGray, blue, 20, plus);
+  saveButton = new Button("Save", 100, 600, 200, 50, white, black, 30, floppy, false); 
+  clearButton = new Button("Clear", 350, 600, 200, 50, white, black, 30, eraser, false);
+  addSubjectButton = new Button("Add", 100, 450, 200, 50, white, black, 30, plus, false);
+  inputB = new Button("New Test", width-210, 30, 200, 50, lightGray, black, 20, pencil, false);
+  outputB = new Button("Set Target", width-210, 90, 200, 50, lightGray, black, 20, target, false);
+  homeB = new Button("Homepage", width-210, 150, 200, 50, lightGray, black, 20, home, false);
+  subjectB = new Button("New Subject", width-210, height-100, 200, 50, lightGray, blue, 20, plus, false);
   
   //mode - INPUT
   
