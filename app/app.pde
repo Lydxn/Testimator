@@ -31,14 +31,14 @@ int subjectIdx;
 
 //all the buttons :(
 Button inputB, outputB, homeB, subjectB; //toolBar
-Button saveButton, clearButton, randomButton; //not used at the moment
+Button saveButton, clearButton, addSubjectButton;
 
 // keypress variables
 int curKey = -1, curKeyCode = -1; // -1 = no key pressed
 boolean isKeyHeld = false;
 
 // textboxes
-TextBox inputStudyTime, inputMark, inputTarget;
+TextBox inputStudyTime, inputMark, inputTarget, inputSubject;
 
 void setup() {
   frameRate(60);
@@ -62,6 +62,7 @@ void setup() {
   inputStudyTime = new TextBox(100, 350, 500, 50, ubuntuMonoFont);
   inputMark = new TextBox(100, 500, 500, 50, ubuntuMonoFont);
   inputTarget = new TextBox(100,350,500,50,ubuntuMonoFont);
+  inputSubject = new TextBox(100, 350, 500, 50, ubuntuMonoFont);
 
   //=======================================
   loadData();
@@ -149,9 +150,8 @@ void initalizeButtons() {
   
   saveButton = new Button("Save", 100, 600, 200, 50, white, black, 30, plus); 
   clearButton = new Button("Clear", 350, 600, 200, 50, white, black, 30, eraser);
-  /*
-  randomButton = new Button("Random", 500, 200, 100,50);
-  */
+  addSubjectButton = new Button("Add", 100, 450, 200, 50, white, black, 30, plus);
+  
   inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,20,pencil);
   outputB = new Button("Set a Target", width-210,90,200,50,lightGray,white,20, target);
   homeB = new Button("Homepage", width-210,150,200,50,lightGray,white,20, home);

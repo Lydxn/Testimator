@@ -100,6 +100,9 @@ void keyPressed() {
   if (mode == Mode.OUTPUT) {
     inputTarget.act();
   }
+  if (mode == Mode.NEW) {
+    inputSubject.act();
+  }
 }
 
 void keyReleased() {
