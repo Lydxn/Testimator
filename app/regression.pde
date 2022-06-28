@@ -9,6 +9,10 @@ class LogCurve {
   float eval(float x) {
     return a + b * log(x);
   }
+  
+  float getTime(float y) {
+    return exp((y-a)/b);
+  }
 }
 
 // Source: https://keisan.casio.com/exec/system/14059930226691

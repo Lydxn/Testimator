@@ -18,4 +18,10 @@ class Subject {
   void addTest(Test test) {
     testData.add(test);
   }
+  
+  int predict(float y) {
+    return int(logRegression(testData).getTime(y));
+  }
+  
+  
 }
