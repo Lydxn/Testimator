@@ -49,7 +49,7 @@ class TextBox {
       textSize(textSize);
       text(text+(frameCount / 25 % 2 == 0 && isSelected ? "_" : ""), x+textWidth("a")/2+10, y + hgt/2 + textSize/2);
     }
-    
+
     //check if text box is selected
     if (mousePressed && isHovering()) {
       isSelected = true;
@@ -71,7 +71,7 @@ class TextBox {
   }
 
   void addText(char ch) {
-    if (textWidth(getTextInsert() + ch) + textSize < wdt && isSelected) { //check if within textbox
+    if (textLength <= 15 && isSelected) { //check if within textbox
       text += ch;
       textLength++;
     }
@@ -80,6 +80,7 @@ class TextBox {
   void backspace() {
     if (!text.isEmpty() && isSelected) //check if text is not empty
       text = text.substring(0, text.length() - 1);
+      textLength--;
   }
 
   // Add extra visual effect inspired by "Insert Mode"
@@ -93,7 +94,7 @@ void keyPressed() {
   if (curKeyCode != -1) isKeyHeld = curKeyCode == keyCode;
   curKey = key;
   curKeyCode = keyCode;
-  if (mode == Mode.INPUT) { 
+  if (mode == Mode.INPUT) {
     inputStudyTime.act();
     inputMark.act();
   }
