@@ -10,7 +10,7 @@ void inputMode() {
    //instructions for textboxes
    textSize(40);
    text("Study Time (min)", xAlign, 300);
-   text("Mark%", xAlign, 450);
+   text("Mark (%)", xAlign, 450);
    
    //textboxes
    inputStudyTime.render();

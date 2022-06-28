@@ -22,7 +22,7 @@ void loadData() {
       }
     }
     // dummy values in button for now
-    subjects.add(new Subject(name, new Button("X", 0,0,0,0,0,0,0,null)));
+    subjects.add(new Subject(name, new Button("X", 1,1,1,1,1,1,1,null)));
   }
 }
 

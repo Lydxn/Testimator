@@ -11,7 +11,7 @@ class Subject {
     
     // assign subject to random color
     colorMode(HSB);
-    this.col = color(colorIdx++ * 69 % 256, 255, 200);
+    this.button.col = color(colorIdx++ * 69 % 256, 255, 200);
     colorMode(RGB);
   }
   
@@ -22,6 +22,4 @@ class Subject {
   int predict(float y) {
     return int(logRegression(testData).getTime(y));
   }
-  
-  
 }

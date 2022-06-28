@@ -18,7 +18,7 @@ final color lightGray  = #BDCBCE;
 final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
-PShape target, plus, pencil, home, eraser;
+PShape target, plus, pencil, home, eraser, floppy;
 PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont, ubuntuMonoFont;
 
 // Mode framework ========================
@@ -45,11 +45,13 @@ void setup() {
   textAlign(CORNER, CENTER);
   
   //load images / font   ==================
+  // https://www.onlinewebfonts.com/icon
   plus = loadShape("data/images/plus.svg");
   target = loadShape("data/images/target.svg");
   pencil = loadShape("data/images/pencil.svg");
   home = loadShape("data/images/home.svg");
   eraser = loadShape("data/images/eraser.svg"); //https://www.onlinewebfonts.com/icon/468470
+  floppy = loadShape("data/images/floppy.svg");
   
   rubikFont = createFont("data/fonts/rubik.ttf", 1);
   andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
@@ -67,14 +69,14 @@ void setup() {
   loadData();
   
   // add arbitrary values (for testing purposes)
-  Subject bio = new Subject("Biology", new Button("Biology", width-210, 300, 200, 50, -1, white, 20, null));
+  Subject bio = new Subject("Biology", new Button("Biology", width-210, -1, 200, 40, -1, white, 20, null));
   bio.addTest(new Test(80, 90));
   bio.addTest(new Test(65, 80));
   bio.addTest(new Test(50, 65));
-  Subject math = new Subject("Math", new Button("Math", width-210, 360, 200, 50, -1, white, 20, null));
+  Subject math = new Subject("Math", new Button("Math", width-210, -1, 200, 40, -1, white, 20, null));
   math.addTest(new Test(90, 100));
   math.addTest(new Test(70, 80));
-  Subject eng = new Subject("English", new Button("English", width-210, 420, 200, 50, -1, white, 20, null));
+  Subject eng = new Subject("English", new Button("English", width-210, -1, 200, 40, -1, white, 20, null));
   eng.addTest(new Test(50, 1));
   eng.addTest(new Test(50, 2));
   eng.addTest(new Test(60, 3));
@@ -136,8 +138,13 @@ void toolBar() {
     subjectB.render();
     
     // render the subject buttons
-    for (Subject subject : subjects)
+    float buttonPos = 180;
+    for (Subject subject : subjects) {
+      // set new button y-position since it can change
+      subject.button.y = buttonPos;
+      buttonPos += 50;
       subject.button.render();
+    }
 }
 
 void toolBarClick() {
@@ -158,7 +165,7 @@ void initalizeButtons() {
   //mode - MAIN
   
   
-  saveButton = new Button("Save", 100, 600, 200, 50, white, black, 30, plus); 
+  saveButton = new Button("Save", 100, 600, 200, 50, white, black, 30, floppy); 
   clearButton = new Button("Clear", 350, 600, 200, 50, white, black, 30, eraser);
   addSubjectButton = new Button("Add", 100, 450, 200, 50, white, black, 30, plus);
   inputB = new Button("New Test", width-210,30,200,50,lightGray,black,20,pencil);

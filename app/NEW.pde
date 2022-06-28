@@ -18,5 +18,12 @@ void newMode() {
   addSubjectButton.render();
 }
 
+final int MAX_SUBJECTS = 9;
+
 void newClick() {
+  if (addSubjectButton.isHover() && subjects.size() < MAX_SUBJECTS) {
+    Subject subject = new Subject(inputSubject.text,
+      new Button(inputSubject.text, width-210, -1, 200, 40, -1, white, 20, null));
+    subjects.add(subject);
+  }
 }

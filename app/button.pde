@@ -27,7 +27,7 @@ class Button {
     textFont(rubikFont, this.txtSz);
     text(this.name, this.x+this.w/this.txtSz, this.y, this.w, this.h);
     if (this.icon != null)
-      shape(this.icon, this.x+this.w*0.8, this.y+this.h*1/6, this.h*2/3, this.h*2/3);
+      shape(this.icon, this.x+this.w*0.75, this.y+this.h*1/6, this.h*2/3, this.h*2/3);
   }
   
   boolean isHover() {
