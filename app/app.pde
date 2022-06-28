@@ -18,7 +18,7 @@ final color lightGray  = #BDCBCE;
 final color silver     = #D1D1D1;
 final color gold       = #E5C982;
 //images/fonts ===========================
-PShape target, plus, pencil, home, eraser, floppy;
+PShape target, plus, pencil, home, eraser, floppy, trashcan;
 PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont, ubuntuMonoFont;
 
 // Mode framework ========================
@@ -52,6 +52,7 @@ void setup() {
   home = loadShape("data/images/home.svg");
   eraser = loadShape("data/images/eraser.svg"); //https://www.onlinewebfonts.com/icon/468470
   floppy = loadShape("data/images/floppy.svg");
+  trashcan = loadShape("data/images/trashcan.svg");
   
   rubikFont = createFont("data/fonts/rubik.ttf", 1);
   andalemoFont = createFont("data/fonts/andalemo.ttf", 1);
