@@ -19,14 +19,15 @@ class Button {
   }
   
   void render() {
-    fill(this.isHover() ? col2 : col);
+    fill(this.isHover() ? col2 : col, 150);
     rect(this.x, this.y, this.w, this.h, 5);
     fill(this.isHover() ? col : col2);
     
     textAlign(LEFT, CENTER);
     textFont(rubikFont, this.txtSz);
     text(this.name, this.x+this.w/this.txtSz, this.y, this.w, this.h);
-    shape(this.icon, this.x+this.w*0.8, this.y+this.h*1/6, this.h*2/3, this.h*2/3);
+    if (this.icon != null)
+      shape(this.icon, this.x+this.w*0.8, this.y+this.h*1/6, this.h*2/3, this.h*2/3);
   }
   
   boolean isHover() {

@@ -25,24 +25,23 @@ PFont andalemoFont, rubikFont, ubuntuFont, ubuntuBoldFont, ubuntuMonoFont;
 enum Mode { MAIN, INPUT, OUTPUT, NEW };
 Mode mode;
 
-// Maps chosen subject to test data
-Map<String, ArrayList<Test>> data;
-int subjectIdx;
+ArrayList<Subject> subjects;
+int subjectIdx, colorIdx;
 
 //all the buttons :(
 Button inputB, outputB, homeB, subjectB; //toolBar
-Button saveButton, clearButton, addSubjectButton;
+Button saveButton, clearButton;
 
 // keypress variables
 int curKey = -1, curKeyCode = -1; // -1 = no key pressed
 boolean isKeyHeld = false;
 
 // textboxes
-TextBox inputStudyTime, inputMark, inputTarget, inputSubject;
+TextBox inputStudyTime, inputMark, inputTarget;
 
 void setup() {
   frameRate(60);
-  size(1200, 800);
+  size(1200, 800, FX2D);
   textAlign(CORNER, CENTER);
   
   //load images / font   ==================
@@ -62,26 +61,26 @@ void setup() {
   inputStudyTime = new TextBox(100, 350, 500, 50, ubuntuMonoFont);
   inputMark = new TextBox(100, 500, 500, 50, ubuntuMonoFont);
   inputTarget = new TextBox(100,350,500,50,ubuntuMonoFont);
-  inputSubject = new TextBox(100, 350, 500, 50, ubuntuMonoFont);
 
   //=======================================
   loadData();
   
   // add arbitrary values (for testing purposes)
-  ArrayList<Test> bio = new ArrayList<Test>();
-  bio.add(new Test(80, 90));
-  bio.add(new Test(65, 80));
-  bio.add(new Test(50, 65));
-  ArrayList<Test> math = new ArrayList<Test>();
-  math.add(new Test(90, 100));
-  math.add(new Test(70, 80));
-  ArrayList<Test> eng = new ArrayList<Test>();
-  eng.add(new Test(50, 1));
-  eng.add(new Test(50, 2));
-  eng.add(new Test(60, 3));
-  data.put("Biology", bio);
-  data.put("Math", math);
-  data.put("English", eng);
+  Subject bio = new Subject("Biology", new Button("Biology", width-210, 300, 200, 50, -1, white, 20, null));
+  bio.addTest(new Test(80, 90));
+  bio.addTest(new Test(65, 80));
+  bio.addTest(new Test(50, 65));
+  Subject math = new Subject("Math", new Button("Math", width-210, 360, 200, 50, -1, white, 20, null));
+  math.addTest(new Test(90, 100));
+  math.addTest(new Test(70, 80));
+  Subject eng = new Subject("English", new Button("English", width-210, 420, 200, 50, -1, white, 20, null));
+  eng.addTest(new Test(50, 1));
+  eng.addTest(new Test(50, 2));
+  eng.addTest(new Test(60, 3));
+  
+  subjects.add(bio);
+  subjects.add(math);
+  subjects.add(eng);
   
   // *FOR DEBUGGING*
   dumpData();
@@ -125,7 +124,7 @@ final int toolbarW = 200;
 
 void toolBar() {
   //render the tool bar ============
-    fill(blue);
+    fill(lightCyan);
     noStroke();
     rect(width-toolbarW, 0, toolbarW, height);
     
@@ -134,13 +133,23 @@ void toolBar() {
     outputB.render();
     homeB.render();
     subjectB.render();
+    
+    // render the subject buttons
+    for (Subject subject : subjects)
+      subject.button.render();
 }
 
 void toolBarClick() {
   if (inputB.isHover()) mode = Mode.INPUT;
   else if (outputB.isHover()) mode = Mode.OUTPUT;
   else if (homeB.isHover()) mode = Mode.MAIN;
-  else if (subjectB.isHover()) mode = Mode.NEW;    
+  else if (subjectB.isHover()) mode = Mode.NEW; 
+  
+  for (int i = 0; i < subjects.size(); i++) {
+    Subject subject = subjects.get(i);
+    if (subject.button.isHover())
+      subjectIdx = i;
+  }
 }
 
 void initalizeButtons() {
@@ -150,12 +159,10 @@ void initalizeButtons() {
   
   saveButton = new Button("Save", 100, 600, 200, 50, white, black, 30, plus); 
   clearButton = new Button("Clear", 350, 600, 200, 50, white, black, 30, eraser);
-  addSubjectButton = new Button("Add", 100, 450, 200, 50, white, black, 30, plus);
-  
-  inputB = new Button("Input new test information", width-210,30,200,50,lightGray,white,20,pencil);
-  outputB = new Button("Set a Target", width-210,90,200,50,lightGray,white,20, target);
-  homeB = new Button("Homepage", width-210,150,200,50,lightGray,white,20, home);
-  subjectB = new Button("New Subject", width-210, height-100, 200, 50, lightCyan, blue, 20, plus);
+  inputB = new Button("New Test", width-210,30,200,50,lightGray,black,20,pencil);
+  outputB = new Button("Set Target", width-210,90,200,50,lightGray,black,20, target);
+  homeB = new Button("Homepage", width-210,150,200,50,lightGray,black,20, home);
+  subjectB = new Button("New Subject", width-210, height-100, 200, 50, lightGray, blue, 20, plus);
   
   //mode - INPUT
   

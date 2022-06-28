@@ -106,7 +106,7 @@ class Graph {
       }
     }
     endShape();
-    
+
     // plot data points
     stroke(red);
     strokeWeight(this.sz * 0.01);
