@@ -10,9 +10,9 @@ void mainMode() {
   rect((width - toolbarW - rectW) / 2, (height - rectH) / 2, rectW, rectH, 30);
   
   // title
-  fill(black);
   textFont(ubuntuBoldFont, 50);
   textAlign(CENTER, TOP);
+  fill(black);
   text(subject.name, (width - toolbarW) / 2, height / 2 - rectH * 0.45);
   
   // graph

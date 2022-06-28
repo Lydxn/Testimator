@@ -34,7 +34,7 @@ class TextBox {
       rect(x, y, wdt, hgt, 20);
       //text
       fill(hoverStroke);
-      //textFont(font);
+      textFont(font);
       textSize(textSize);
       text(text+(frameCount / 25 % 2 == 0 && isSelected ? "_" : ""), x+textWidth("a")/2+10, y + hgt/2 + textSize/2);
     } else {
@@ -45,7 +45,7 @@ class TextBox {
       rect(x, y, wdt, hgt, 20);
       //text
       fill(normalStroke);
-      //textFont(font);
+      textFont(font);
       textSize(textSize);
       text(text+(frameCount / 25 % 2 == 0 && isSelected ? "_" : ""), x+textWidth("a")/2+10, y + hgt/2 + textSize/2);
     }
@@ -99,6 +99,9 @@ void keyPressed() {
   }
   if (mode == Mode.OUTPUT) {
     inputTarget.act();
+  }
+  if (mode == Mode.NEW) {
+    inputSubject.act();
   }
 }
 
